@@ -46,9 +46,9 @@ const gameboard = (() => {
 
 const player = (playerName, playerMarker) => {
   const getName = () => playerName;
-  const getSymbol = () => playerMarker;
+  const getMarker = () => playerMarker;
 
-  return { getName, getSymbol };
+  return { getName, getMarker };
 };
 
 const controller = (() => {})();

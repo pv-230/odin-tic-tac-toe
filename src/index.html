@@ -9,5 +9,42 @@
     <link rel="stylesheet" href="styles/styles.css" />
     <script defer src="scripts.js"></script>
   </head>
-  <body></body>
+  <body>
+    <header>
+      <div class="left-turn-indicator">
+        <span></span>
+      </div>
+      <div class="center-panel">
+        <h1>Tic Tac Toe</h1>
+        <div class="scoreboard">
+          <h2>Score</h2>
+          <div class="player1-info">
+            <span class="player1-name"></span>
+            <span class="player1-counter"></span>
+          </div>
+          <button type="button">Reset</button>
+          <div class="player2-info">
+            <span class="player2-name"></span>
+            <span class="player2-counter"></span>
+          </div>
+        </div>
+      </div>
+      <div class="left-turn-indicator">
+        <span></span>
+      </div>
+    </header>
+    <main>
+      <div class="gameboard">
+        <div class="cell" data-row="0" data-col="0">00</div>
+        <div class="cell" data-row="0" data-col="1">01</div>
+        <div class="cell" data-row="0" data-col="2">02</div>
+        <div class="cell" data-row="1" data-col="0">10</div>
+        <div class="cell" data-row="1" data-col="1">11</div>
+        <div class="cell" data-row="1" data-col="2">12</div>
+        <div class="cell" data-row="2" data-col="0">20</div>
+        <div class="cell" data-row="2" data-col="1">21</div>
+        <div class="cell" data-row="2" data-col="2">22</div>
+      </div>
+    </main>
+  </body>
 </html>
