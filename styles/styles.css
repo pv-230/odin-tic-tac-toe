@@ -1,4 +1,11 @@
 :root {
+  --bg-color: rgb(36, 36, 36);
+  --header-color: rgb(43, 37, 32);
+  --bright-name: rgb(255, 238, 0);
+  --bright-glow: rgb(255, 196, 0);
+  --dark-name: rgb(27, 27, 27);
+  --dark-glow: rgb(54, 54, 54);
+  --header-height: 200px;
 }
 
 * {
@@ -6,5 +13,175 @@
 }
 
 body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   min-height: 100vh;
+  background-color: var(--bg-color);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica,
+    Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+}
+
+header {
+  display: flex;
+  justify-content: center;
+  width: 100vw;
+  height: var(--header-height);
+  background-color: var(--header-color);
+  box-shadow: 0 8px 4px rgb(34, 34, 34);
+}
+
+.left-turn-indicator,
+.right-turn-indicator {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Passion One', cursive;
+  font-size: clamp(0.9rem, 3vw, 4rem);
+  letter-spacing: 1px;
+  color: var(--dark-name);
+  text-shadow: 0 0 10px var(--dark-glow);
+}
+
+.left-turn-indicator > span,
+.right-turn-indicator > span {
+  max-width: 10ch;
+  margin: 4px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.selected {
+  color: var(--bright-name);
+  text-shadow: 0 0 10px var(--bright-glow);
+}
+
+/* Center panel styling */
+
+.center-panel {
+  display: grid;
+  grid-template-columns: repeat(3, max-content);
+  grid-template-areas:
+    'title title title'
+    'score score score'
+    'player1 reset player2';
+  justify-items: center;
+  align-items: center;
+  padding: 8px;
+  font-family: 'Passion One', cursive;
+  color: whitesmoke;
+}
+
+.title-text {
+  display: flex;
+  align-items: center;
+  grid-area: title;
+  font-size: clamp(2rem, 6vw, 4rem);
+  font-weight: 900;
+  color: darkred;
+  border-bottom: 2px solid whitesmoke;
+}
+
+.title-text > span {
+  font-size: clamp(1rem, 3vw, 2rem);
+}
+
+.score-text {
+  grid-area: score;
+  font-size: clamp(1rem, 6vw, 3rem);
+}
+
+.reset {
+  grid-area: reset;
+  width: max-content;
+  margin: 0 8px;
+  padding: 8px 16px;
+  font-family: 'Passion One', cursive;
+  font-size: 1.5rem;
+  border: none;
+  border-radius: 4px;
+  background-color: darkred;
+  color: whitesmoke;
+}
+
+.reset:hover {
+  background-color: rgb(169, 0, 0);
+}
+
+/* Player info common styling */
+
+.player1-info,
+.player2-info {
+  width: 10ch;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+
+.player1-name,
+.player2-name {
+  max-width: 10ch;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  margin-bottom: 4px;
+  letter-spacing: 0.5px;
+}
+
+.player1-counter,
+.player2-counter {
+  width: 5ch;
+  max-width: 5ch;
+  padding: 0 4px;
+  text-align: right;
+  font-family: 'VT323', monospace;
+  font-size: 2rem;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  border: 2px solid black;
+  border-radius: 4px;
+  background-color: var(--bg-color);
+}
+
+/* Player 1 specific styling */
+
+.player1-info {
+  grid-area: player1;
+}
+
+.player1-name,
+.player1-counter {
+  margin-left: auto;
+}
+
+/* Player 2 specific styling */
+
+.player2-info {
+  grid-area: player2;
+}
+
+.player2-name,
+.player2-counter {
+  margin-right: auto;
+}
+
+/* Gameboard styling */
+
+.gameboard {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  justify-items: center;
+  align-items: center;
+  height: calc(100vh - var(--header-height));
+  width: calc(100vh - var(--header-height));
+  border: 2px solid black;
+}
+
+.cell {
+  width: 99%;
+  height: 99%;
+  border: 1px solid black;
 }

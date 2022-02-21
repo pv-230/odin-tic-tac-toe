@@ -7,44 +7,52 @@
     <title>Tic Tac Toe</title>
     <link rel="stylesheet" href="styles/reset.css" />
     <link rel="stylesheet" href="styles/styles.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Passion+One:wght@700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=VT323&display=swap"
+      rel="stylesheet"
+    />
     <script defer src="scripts.js"></script>
   </head>
   <body>
     <header>
       <div class="left-turn-indicator">
-        <span></span>
+        <span class="selected">Player 1</span>
       </div>
       <div class="center-panel">
-        <h1>Tic Tac Toe</h1>
-        <div class="scoreboard">
-          <h2>Score</h2>
-          <div class="player1-info">
-            <span class="player1-name"></span>
-            <span class="player1-counter"></span>
-          </div>
-          <button type="button">Reset</button>
-          <div class="player2-info">
-            <span class="player2-name"></span>
-            <span class="player2-counter"></span>
-          </div>
+        <h1 class="title-text">Tic<span>✦</span>Tac<span>✦</span>Toe</h1>
+        <h2 class="score-text">Score</h2>
+        <div class="player1-info">
+          <span class="player1-name">Player 1</span>
+          <span class="player1-counter">0</span>
+        </div>
+        <button class="reset" type="button">Reset</button>
+        <div class="player2-info">
+          <span class="player2-name">Player 2</span>
+          <span class="player2-counter">0</span>
         </div>
       </div>
-      <div class="left-turn-indicator">
-        <span></span>
+      <div class="right-turn-indicator">
+        <span>Player 2</span>
       </div>
     </header>
-    <main>
-      <div class="gameboard">
-        <div class="cell" data-row="0" data-col="0">00</div>
-        <div class="cell" data-row="0" data-col="1">01</div>
-        <div class="cell" data-row="0" data-col="2">02</div>
-        <div class="cell" data-row="1" data-col="0">10</div>
-        <div class="cell" data-row="1" data-col="1">11</div>
-        <div class="cell" data-row="1" data-col="2">12</div>
-        <div class="cell" data-row="2" data-col="0">20</div>
-        <div class="cell" data-row="2" data-col="1">21</div>
-        <div class="cell" data-row="2" data-col="2">22</div>
-      </div>
-    </main>
+    <div class="gameboard">
+      <div class="cell" data-row="0" data-col="0">00</div>
+      <div class="cell" data-row="0" data-col="1">01</div>
+      <div class="cell" data-row="0" data-col="2">02</div>
+      <div class="cell" data-row="1" data-col="0">10</div>
+      <div class="cell" data-row="1" data-col="1">11</div>
+      <div class="cell" data-row="1" data-col="2">12</div>
+      <div class="cell" data-row="2" data-col="0">20</div>
+      <div class="cell" data-row="2" data-col="1">21</div>
+      <div class="cell" data-row="2" data-col="2">22</div>
+    </div>
   </body>
 </html>
