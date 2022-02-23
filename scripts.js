@@ -15,6 +15,11 @@ const gameboard = (() => {
   const getBoard = () => JSON.parse(JSON.stringify(board));
 
   /**
+   * Returns true if a position is available for a marker.
+   */
+  const isAvailable = (row, col) => board[row][col] === '';
+
+  /**
    * Clears the markers on the board.
    */
   const resetBoard = () => {
@@ -41,14 +46,81 @@ const gameboard = (() => {
     board[row][col] = markerUpper;
   };
 
-  return { getBoard, resetBoard, setMarker };
+  return { getBoard, resetBoard, setMarker, isAvailable };
 })();
 
-const player = (playerName, playerMarker) => {
+/**
+ * Player factory function
+ * @param {String} playerName
+ * @param {String} playerMarker
+ * @returns
+ */
+const Player = (playerName, playerMarker) => {
   const getName = () => playerName;
   const getMarker = () => playerMarker;
 
   return { getName, getMarker };
 };
 
-const controller = (() => {})();
+/**
+ * Controller module
+ */
+const controller = (() => {
+  let player1 = null;
+  let player2 = null;
+  let currentPlayer = null;
+
+  // Used for highlighting player names on their turn
+  const leftName = document.querySelector('.left-turn-indicator>span');
+  const rightName = document.querySelector('.right-turn-indicator>span');
+
+  /**
+   * Places a marker on the board.
+   * @param {Event} e
+   */
+  const makeTurn = (e) => {
+    const row = e.target.getAttribute('data-row');
+    const col = e.target.getAttribute('data-col');
+
+    if (gameboard.isAvailable(row, col)) {
+      const cell = document.querySelector(
+        `.cell[data-row='${row}'][data-col='${col}']`
+      );
+      cell.textContent = currentPlayer.getMarker();
+      gameboard.setMarker(currentPlayer.getMarker(), row, col);
+
+      if (currentPlayer === player1) {
+        leftName.classList.toggle('selected');
+        currentPlayer = player2;
+        rightName.classList.toggle('selected');
+      } else {
+        rightName.classList.toggle('selected');
+        currentPlayer = player1;
+        leftName.classList.toggle('selected');
+      }
+    }
+  };
+
+  // Adds an event listener to each cell of the board
+  const boardCells = [...document.querySelectorAll('.cell')];
+  boardCells.forEach((cell) => {
+    cell.addEventListener('click', makeTurn);
+  });
+
+  const addPlayers = () => {
+    player1 = Player('Player 1', 'X');
+    leftName.textContent = player1.getName();
+    player2 = Player('Player 2', 'O');
+    rightName.textContent = player2.getName();
+    currentPlayer = player1;
+    leftName.classList.toggle('selected');
+  };
+
+  const startGame = () => {
+    addPlayers();
+  };
+
+  return { startGame };
+})();
+
+controller.startGame();
