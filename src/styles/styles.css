@@ -1,6 +1,6 @@
 :root {
   --bg-color: rgb(36, 36, 36);
-  --header-color: rgb(43, 37, 32);
+  --header-color: rgb(37, 37, 49);
   --bright-name: rgb(255, 238, 0);
   --bright-glow: rgb(255, 196, 0);
   --dark-name: rgb(27, 27, 27);
@@ -24,11 +24,11 @@ body {
 
 header {
   display: flex;
-  justify-content: center;
-  width: 100vw;
   height: var(--header-height);
+  width: 100%;
   background-color: var(--header-color);
-  box-shadow: 0 8px 4px rgb(34, 34, 34);
+  box-shadow: 0 4px 8px rgb(29, 29, 29);
+  overflow: auto;
 }
 
 .left-turn-indicator,
@@ -38,7 +38,7 @@ header {
   justify-content: center;
   align-items: center;
   font-family: 'Passion One', cursive;
-  font-size: clamp(0.9rem, 3vw, 4rem);
+  font-size: clamp(2rem, 5vw, 4rem);
   letter-spacing: 1px;
   color: var(--dark-name);
   text-shadow: 0 0 10px var(--dark-glow);
@@ -47,7 +47,8 @@ header {
 .left-turn-indicator > span,
 .right-turn-indicator > span {
   max-width: 10ch;
-  margin: 4px;
+  min-width: max-content;
+  padding: 10px;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -78,19 +79,20 @@ header {
   display: flex;
   align-items: center;
   grid-area: title;
-  font-size: clamp(2rem, 6vw, 4rem);
+  font-size: 4rem;
   font-weight: 900;
   color: darkred;
   border-bottom: 2px solid whitesmoke;
 }
 
+/* Stars between title */
 .title-text > span {
-  font-size: clamp(1rem, 3vw, 2rem);
+  font-size: 2rem;
 }
 
 .score-text {
   grid-area: score;
-  font-size: clamp(1rem, 6vw, 3rem);
+  font-size: 3rem;
 }
 
 .reset {
@@ -175,13 +177,23 @@ header {
   grid-template-columns: repeat(3, 1fr);
   justify-items: center;
   align-items: center;
-  height: calc(100vh - var(--header-height));
   width: calc(100vh - var(--header-height));
+  min-width: 500px;
+  height: calc(100vh - var(--header-height));
+  min-height: 500px;
   border: 2px solid black;
+  border-radius: 4px;
 }
 
 .cell {
-  width: 99%;
-  height: 99%;
+  width: 100%;
+  height: 100%;
+  font-size: 3rem;
   border: 1px solid black;
+  background-color: rgb(180, 153, 112);
+  box-shadow: inset 0 0 10px var(--bg-color);
+}
+
+.cell:hover {
+  background-color: rgb(197, 171, 131);
 }
