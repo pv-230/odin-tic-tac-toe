@@ -13,19 +13,27 @@
 }
 
 body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica,
+    Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+  background-color: black;
+}
+
+.game-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   min-height: 100vh;
   background-color: var(--bg-color);
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica,
-    Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+}
+
+.game-container.blurred {
+  filter: blur(5px);
 }
 
 header {
   display: flex;
-  height: var(--header-height);
   width: 100%;
+  height: var(--header-height);
   font-family: 'Passion One', cursive;
   background-color: var(--header-color);
   box-shadow: 0 4px 8px rgb(29, 29, 29);
@@ -120,16 +128,6 @@ header {
   text-align: center;
 }
 
-.player1-name,
-.player2-name {
-  max-width: 10ch;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  margin-bottom: 4px;
-  letter-spacing: 0.5px;
-}
-
 .player1-counter,
 .player2-counter {
   width: 5ch;
@@ -196,4 +194,69 @@ header {
 
 .cell:hover {
   background-color: rgb(197, 171, 131);
+}
+
+/* Start window styling */
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+}
+
+.overlay.hidden {
+  display: none;
+}
+
+#start-form {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  justify-content: center;
+  align-items: center;
+  width: max-content;
+  padding: 32px;
+  border: 1px solid black;
+  border-radius: 8px;
+  color: whitesmoke;
+  background-color: var(--bg-color);
+  font-family: Roboto, sans-serif;
+  font-size: 1.5rem;
+}
+
+#start-form > h2 {
+  font-size: 2rem;
+  padding-bottom: 4px;
+  border-bottom: 1px solid whitesmoke;
+}
+
+#start-form > div > input {
+  max-width: 11ch;
+  border: none;
+  border-radius: 4px;
+  padding: 4px;
+  color: whitesmoke;
+  background-color: rgb(80, 80, 80);
+  font-family: Roboto, sans-serif;
+  font-size: 1.5rem;
+}
+
+.start-button {
+  padding: 4px 16px;
+  border: none;
+  border-radius: 4px;
+  color: whitesmoke;
+  background-color: rgb(94, 156, 0);
+  font-family: Roboto, sans-serif;
+  font-size: 2rem;
+}
+
+.start-button {
+  background-color: rgb(110, 184, 0);
 }
