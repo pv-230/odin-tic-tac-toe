@@ -54,7 +54,7 @@ header {
 
 .left-turn-indicator > span,
 .right-turn-indicator > span {
-  max-width: 10ch;
+  max-width: 11ch;
   padding: 10px;
   overflow: hidden;
   white-space: nowrap;
@@ -257,6 +257,6 @@ header {
   font-size: 2rem;
 }
 
-.start-button {
+.start-button:hover {
   background-color: rgb(110, 184, 0);
 }
