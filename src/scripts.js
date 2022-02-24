@@ -90,12 +90,11 @@ const gameboard = (() => {
  * @param {String} playerMarker
  * @returns
  */
-const Player = (playerName, playerMarker, playerNum) => {
+const Player = (playerName, playerMarker) => {
   const getName = () => playerName;
   const getMarker = () => playerMarker;
-  const getNum = () => playerNum;
 
-  return { getName, getMarker, getNum };
+  return { getName, getMarker };
 };
 
 /**
@@ -155,7 +154,7 @@ const controller = (() => {
       cell.textContent = currentPlayer.getMarker();
       gameboard.setMarker(currentPlayer.getMarker(), row, col);
       if (gameboard.isWinningMove(row, col)) {
-        if (currentPlayer.getNum() === 1) {
+        if (currentPlayer.getMarker() === 'X') {
           p1Score += 1;
           const counter = document.querySelector('.player1-counter');
           counter.textContent = p1Score;
@@ -175,25 +174,46 @@ const controller = (() => {
    * Adds players to the game.
    */
   const addPlayers = () => {
+    const overlay = document.querySelector('.overlay');
+    const gameContainer = document.querySelector('.game-container');
     const leftName = document.querySelector('.left-turn-indicator>span');
     const rightName = document.querySelector('.right-turn-indicator>span');
+    const startForm = document.forms['start-form'];
+    const player1 = startForm.elements['player-1-name'].value;
+    const player2 = startForm.elements['player-2-name'].value;
 
-    p1 = Player('Player 1', 'X', 1);
-    leftName.textContent = p1.getName();
-    p2 = Player('Player 2', 'O', 2);
-    rightName.textContent = p2.getName();
-  };
-
-  const startGame = () => {
-    addPlayers();
+    p1 = Player(player1, 'X');
+    p2 = Player(player2, 'O');
+    leftName.textContent = player1;
+    rightName.textContent = player2;
+    gameContainer.classList.toggle('blurred');
+    overlay.classList.toggle('hidden');
     nextPlayer();
   };
 
-  // Adds an event listener to the reset button
+  /**
+   * Displays a start windows where players enter their names.
+   */
+  const showStartWindow = () => {
+    const overlay = document.querySelector('.overlay');
+    const gameContainer = document.querySelector('.game-container');
+    gameContainer.classList.toggle('blurred');
+    overlay.classList.toggle('hidden');
+  };
+
+  const startGame = () => {
+    showStartWindow();
+  };
+
+  // Event listener for the start button
+  const startButton = document.querySelector('.start-button');
+  startButton.addEventListener('click', addPlayers);
+
+  // Event listener to the reset button
   const reset = document.querySelector('.reset');
   reset.addEventListener('click', resetGame);
 
-  // Adds an event listener to each cell of the board
+  // Event listener to each cell of the board
   const boardCells = [...document.querySelectorAll('.cell')];
   boardCells.forEach((cell) => {
     cell.addEventListener('click', makeTurn);

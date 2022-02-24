@@ -13,6 +13,10 @@
       href="https://fonts.googleapis.com/css2?family=Passion+One:wght@700&display=swap"
       rel="stylesheet"
     />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto&display=swap"
+      rel="stylesheet"
+    />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -22,37 +26,61 @@
     <script defer src="scripts.js"></script>
   </head>
   <body>
-    <header>
-      <div class="left-turn-indicator">
-        <span></span>
-      </div>
-      <div class="center-panel">
-        <h1 class="title-text">Tic<span>✦</span>Tac<span>✦</span>Toe</h1>
-        <h2 class="score-text">Score</h2>
-        <div class="player1-info">
-          <span class="player1-name"></span>
-          <span class="player1-counter">0</span>
+    <div class="game-container">
+      <header>
+        <div class="left-turn-indicator">
+          <span></span>
         </div>
-        <button class="reset" type="button">Reset</button>
-        <div class="player2-info">
-          <span class="player2-name"></span>
-          <span class="player2-counter">0</span>
+        <div class="center-panel">
+          <h1 class="title-text">Tic<span>✦</span>Tac<span>✦</span>Toe</h1>
+          <h2 class="score-text">Score</h2>
+          <div class="player1-info">
+            <span class="player1-counter">0</span>
+          </div>
+          <button class="reset" type="button">Reset</button>
+          <div class="player2-info">
+            <span class="player2-counter">0</span>
+          </div>
         </div>
+        <div class="right-turn-indicator">
+          <span></span>
+        </div>
+      </header>
+      <div class="gameboard">
+        <button class="cell" data-row="0" data-col="0"></button>
+        <button class="cell" data-row="0" data-col="1"></button>
+        <button class="cell" data-row="0" data-col="2"></button>
+        <button class="cell" data-row="1" data-col="0"></button>
+        <button class="cell" data-row="1" data-col="1"></button>
+        <button class="cell" data-row="1" data-col="2"></button>
+        <button class="cell" data-row="2" data-col="0"></button>
+        <button class="cell" data-row="2" data-col="1"></button>
+        <button class="cell" data-row="2" data-col="2"></button>
       </div>
-      <div class="right-turn-indicator">
-        <span></span>
-      </div>
-    </header>
-    <div class="gameboard">
-      <button class="cell" data-row="0" data-col="0"></button>
-      <button class="cell" data-row="0" data-col="1"></button>
-      <button class="cell" data-row="0" data-col="2"></button>
-      <button class="cell" data-row="1" data-col="0"></button>
-      <button class="cell" data-row="1" data-col="1"></button>
-      <button class="cell" data-row="1" data-col="2"></button>
-      <button class="cell" data-row="2" data-col="0"></button>
-      <button class="cell" data-row="2" data-col="1"></button>
-      <button class="cell" data-row="2" data-col="2"></button>
+    </div>
+    <div class="overlay hidden">
+      <form id="start-form">
+        <h2>Enter player names</h2>
+        <div>
+          <label for="player-1-name">Player 1:</label>
+          <input
+            type="text"
+            id="player-1-name"
+            name="player-1-name"
+            maxlength="10"
+          />
+        </div>
+        <div>
+          <label for="player-2-name">Player 2:</label>
+          <input
+            type="text"
+            id="player-2-name"
+            name="player-2-name"
+            maxlength="10"
+          />
+        </div>
+        <button class="start-button" type="button">Start</button>
+      </form>
     </div>
   </body>
 </html>
