@@ -106,6 +106,7 @@ const controller = (() => {
   let p1Score = 0;
   let p2Score = 0;
   let currentPlayer = null;
+  let turns = 0;
 
   /**
    * Switches to the next player's turn and highlights their name.
@@ -137,6 +138,7 @@ const controller = (() => {
       const cell = c;
       cell.textContent = '';
     });
+    turns = 0;
   };
 
   /**
@@ -153,6 +155,7 @@ const controller = (() => {
       );
       cell.textContent = currentPlayer.getMarker();
       gameboard.setMarker(currentPlayer.getMarker(), row, col);
+
       if (gameboard.isWinningMove(row, col)) {
         if (currentPlayer.getMarker() === 'X') {
           p1Score += 1;
@@ -165,7 +168,13 @@ const controller = (() => {
         }
         resetGame();
       } else {
-        nextPlayer();
+        turns += 1;
+
+        if (turns === 9) {
+          resetGame();
+        } else {
+          nextPlayer();
+        }
       }
     }
   };
