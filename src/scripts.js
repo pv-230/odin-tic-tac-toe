@@ -130,15 +130,36 @@ const controller = (() => {
    * Event handler that resets the game.
    */
   const resetGame = () => {
-    gameboard.resetBoard();
-    currentPlayer = null;
-    nextPlayer();
     const cells = document.querySelectorAll('.cell');
+    const counter1 = document.querySelector('.player1-counter');
+    const counter2 = document.querySelector('.player2-counter');
+
+    currentPlayer = null;
+    p1Score = 0;
+    p2Score = 0;
+    turns = 0;
+
+    counter1.textContent = p1Score;
+    counter2.textContent = p2Score;
+    gameboard.resetBoard();
     cells.forEach((c) => {
       const cell = c;
       cell.textContent = '';
     });
+    nextPlayer();
+  };
+
+  const nextRound = () => {
+    const cells = document.querySelectorAll('.cell');
+
+    gameboard.resetBoard();
+    cells.forEach((c) => {
+      const cell = c;
+      cell.textContent = '';
+    });
+    currentPlayer = null;
     turns = 0;
+    nextPlayer();
   };
 
   /**
@@ -156,6 +177,7 @@ const controller = (() => {
       cell.textContent = currentPlayer.getMarker();
       gameboard.setMarker(currentPlayer.getMarker(), row, col);
 
+      // Check for a winning move
       if (gameboard.isWinningMove(row, col)) {
         if (currentPlayer.getMarker() === 'X') {
           p1Score += 1;
@@ -166,12 +188,11 @@ const controller = (() => {
           const counter = document.querySelector('.player2-counter');
           counter.textContent = p2Score;
         }
-        resetGame();
+        nextRound();
       } else {
         turns += 1;
-
         if (turns === 9) {
-          resetGame();
+          nextRound();
         } else {
           nextPlayer();
         }
@@ -210,10 +231,6 @@ const controller = (() => {
     overlay.classList.toggle('hidden');
   };
 
-  const startGame = () => {
-    showStartWindow();
-  };
-
   // Event listener for the start button
   const startButton = document.querySelector('.start-button');
   startButton.addEventListener('click', addPlayers);
@@ -228,7 +245,7 @@ const controller = (() => {
     cell.addEventListener('click', makeTurn);
   });
 
-  return { startGame };
+  return { showStartWindow };
 })();
 
-controller.startGame();
+controller.showStartWindow();
