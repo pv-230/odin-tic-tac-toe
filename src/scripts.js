@@ -48,6 +48,11 @@ const gameboard = (() => {
     }
   };
 
+  /**
+   * Returns true if the specified position is a winning move (3 in a row).
+   * @param {Number} row
+   * @param {Number} col
+   */
   const isWinningMove = (row, col) => {
     const marker = board[row][col];
 
@@ -120,6 +125,7 @@ const controller = (() => {
       currentPlayer = p2;
       rightName.classList.add('selected');
     } else {
+      // Defaults to player 1 when currentPlayer is null
       rightName.classList.remove('selected');
       currentPlayer = p1;
       leftName.classList.add('selected');
@@ -127,17 +133,22 @@ const controller = (() => {
   };
 
   /**
-   * Event handler that resets the game.
+   * Resets game state.
    */
   const resetGame = () => {
     const cells = document.querySelectorAll('.cell');
     const counter1 = document.querySelector('.player1-counter');
     const counter2 = document.querySelector('.player2-counter');
+    const roundInfoText = document.querySelector('.round-info-text');
 
     currentPlayer = null;
     p1Score = 0;
     p2Score = 0;
     turns = 0;
+
+    if (roundInfoText.textContent) {
+      roundInfoText.textContent = '';
+    }
 
     counter1.textContent = p1Score;
     counter2.textContent = p2Score;
@@ -149,6 +160,9 @@ const controller = (() => {
     nextPlayer();
   };
 
+  /**
+   * Clears the board when a player wins a round or the round ends in a tie.
+   */
   const nextRound = () => {
     const cells = document.querySelectorAll('.cell');
 
@@ -163,35 +177,60 @@ const controller = (() => {
   };
 
   /**
-   * Event handler that places a marker on the board.
+   * Displays a status message after a round ends.
+   */
+  const showRoundInfo = (status) => {
+    const roundInfoText = document.querySelector('.round-info-text');
+
+    if (status === 0) {
+      roundInfoText.textContent = 'Tie!';
+    } else if (status === 1) {
+      roundInfoText.textContent = `${p1.getName()} wins!`;
+    } else if (status === 2) {
+      roundInfoText.textContent = `${p2.getName()} wins!`;
+    }
+  };
+
+  /**
+   * Event handler for each board cell that places a marker on the board.
    * @param {Event} e
    */
   const makeTurn = (e) => {
     const row = e.target.getAttribute('data-row');
     const col = e.target.getAttribute('data-col');
+    const roundInfoText = document.querySelector('.round-info-text');
+
+    if (roundInfoText.textContent) {
+      roundInfoText.textContent = '';
+    }
 
     if (gameboard.isAvailable(row, col)) {
+      // Places the marker
       const cell = document.querySelector(
         `.cell[data-row='${row}'][data-col='${col}']`
       );
       cell.textContent = currentPlayer.getMarker();
       gameboard.setMarker(currentPlayer.getMarker(), row, col);
 
-      // Check for a winning move
       if (gameboard.isWinningMove(row, col)) {
+        // A player has won
         if (currentPlayer.getMarker() === 'X') {
           p1Score += 1;
           const counter = document.querySelector('.player1-counter');
           counter.textContent = p1Score;
+          showRoundInfo(1);
         } else {
           p2Score += 1;
           const counter = document.querySelector('.player2-counter');
           counter.textContent = p2Score;
+          showRoundInfo(2);
         }
         nextRound();
       } else {
         turns += 1;
         if (turns === 9) {
+          // Round ended in a tie
+          showRoundInfo(0);
           nextRound();
         } else {
           nextPlayer();
@@ -201,7 +240,7 @@ const controller = (() => {
   };
 
   /**
-   * Adds players to the game.
+   * Adds players to the game based on form data from the start window.
    */
   const addPlayers = () => {
     const overlay = document.querySelector('.overlay');
@@ -212,13 +251,17 @@ const controller = (() => {
     const player1 = startForm.elements['player-1-name'].value;
     const player2 = startForm.elements['player-2-name'].value;
 
-    p1 = Player(player1, 'X');
-    p2 = Player(player2, 'O');
-    leftName.textContent = player1;
-    rightName.textContent = player2;
-    gameContainer.classList.toggle('blurred');
-    overlay.classList.toggle('hidden');
-    nextPlayer();
+    if (startForm.checkValidity()) {
+      p1 = Player(player1, 'X');
+      p2 = Player(player2, 'O');
+      leftName.textContent = player1;
+      rightName.textContent = player2;
+      gameContainer.classList.toggle('blurred');
+      overlay.classList.toggle('hidden');
+      nextPlayer();
+    } else {
+      startForm.reportValidity();
+    }
   };
 
   /**
@@ -229,6 +272,14 @@ const controller = (() => {
     const gameContainer = document.querySelector('.game-container');
     gameContainer.classList.toggle('blurred');
     overlay.classList.toggle('hidden');
+  };
+
+  /**
+   * Starts the game.
+   */
+  const startGame = () => {
+    resetGame();
+    showStartWindow();
   };
 
   // Event listener for the start button
@@ -245,7 +296,7 @@ const controller = (() => {
     cell.addEventListener('click', makeTurn);
   });
 
-  return { showStartWindow };
+  return { startGame };
 })();
 
-controller.showStartWindow();
+controller.startGame();
